@@ -1,2 +1,2 @@
-# Introdu-o_ao_R_Aplica-es
-Neste repositório, compartilharei os materiais do curso: Introdução ao R e Aplicações
+Seja bem vindo ao curso **Introdução ao R e Aplicações**
+Neste repositório, compartilharei os materiais utilizados.

@@ -1,0 +1,137 @@
+---
+title: "Quando eu esquecer"
+author: "Jennifer Lopes"
+date: "2023-10-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Pacotes
+
+-   library(tidyverse)
+-   library(janitor)
+-   library(ggplot2)
+-   library(dplyr)
+-   library(readr)
+-   library(DT)
+
+# Leitura de dados
+
+read.csv()- Leitura de arquivos separados por ponto e virgula (;)
+
+# Funções do dplyr \| Base R
+
+-   rename() - Serve para renomear o nome das variáveis (nome_novo= nome)
+
+-   View(dados)- serve para visualizar a base de dados
+
+-   head(dados,n = 10)- visualização das primeiras 10 linhas
+
+-   glimpse(dados)- exibe os nomes e os tipos das variáveis da base de dados
+
+-   select()-
+
+-   drop_na()-
+
+-   MUTATE () - criação de novas variáveis
+
+# Funções outros pacotes
+
+datatable()- função do pacote {DT}, para gerar uma tabela interativa.
+
+# Mini glossário
+
+## Geral
+
+-   Data= ggplot(data)
+
+-   Aesthetics= aes()
+
+-   Geometries= geom\_\*()
+
+-   Statistics= stat\_\*()
+
+-   Scales= scale\_\*()
+
+-   Coordinate System= coord\_\*()
+
+-   Facets= facet\_\*()
+
+-   
+
+    ## Visual Themes= theme() \| theme\_\*()
+
+    ## Aesthetics
+
+    -   positions= x \| y
+    -   colors= color \| fill
+    -   shapes= shape \| linetype)
+
+-   size= size\
+
+-   transparency= alpha
+
+-   
+
+    ## groupings= group
+
+    ## Geoms
+
+    -   points
+
+-   lines
+
+-   polygons
+
+-   text labels
+
+```{r message=FALSE, warning=FALSE, , out.width="70%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("shape.png")
+```
+
+---
+  # Facets | Coordenadas
+  
+  - facet_wrap()
+- facet_grid ()
+
+- coord_cartesian()
+- coord_fixed()
+- coord_flip() 
+
+
+# Scales
+
+- positions via scale_x_*() and scale_y_*()
+- 
+  - colors via scale_color_*() and scale_fill_*()
+- 
+  - sizes via scale_size_*() and scale_radius_*()
+- 
+  - shapes via scale_shape_*() and scale_linetype_*()
+- 
+  - transparency via scale_alpha_*()
+---
+
+\# Scales
+
+-   continuous(), discrete(), reverse(), log10(), sqrt(), date() = posições
+
+-   continuous(), discrete(), manual(), gradient(), gradient2(), brewer() = cores
+
+-   continuous(), discrete(), manual(), ordinal(), area(), date() = tamanhos
+
+-   continuous(), discrete(), manual(), ordinal() = formas
+
+-   
+
+    ## continuous(), discrete(), manual(), ordinal(), date() = transparência
+
+    # Variáveis continuas x discretas
+
+    ### Contínuas: altura, peso, idade, imc
+
+    ### Discreta: espécies, gênero, estado cívil, raça

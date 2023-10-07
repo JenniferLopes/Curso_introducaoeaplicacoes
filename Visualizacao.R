@@ -27,16 +27,15 @@
 # install.packages("plotly")
 # install.packages("GGally")
 # install.packages("gganimate")
+# install.packages("pcman")
 
 # Carregando pacotes ------------------------------------------------------
 
 library(tidyverse)
 library(janitor)
 library(readr)
-library(patchwork)
 library(ggtext)
 library(ggridges)
-library(cowplot)
 library(DT)
 library(hrbrthemes)
 library(viridis)
@@ -47,6 +46,25 @@ library(ggforce)
 library(plotly)
 library(GGally)
 library(gganimate)
+library(pcman)
+library(lemon)
+
+
+# Use o pacote pcman ------------------------------------------------------
+
+pacman::p_load(lemon, gganimate, GGally,plotly, ggforce,patchwork,ggthemes,
+               forcats,viridis,hrbrthemes, DT, ggridges, ggtext, 
+               readr, janitor, tidyverse)
+
+
+# Argumentos --------------------------------------------------------------
+
+# color= altera a cor de formas que não tem área (pontos e retas)
+# fill=  altera a cor de formas com área (barras, caixas, densidades, áreas)
+# size=  altera o tamanho de formas
+# shape=  altera o tipo da forma, geralmente usada para pontos
+# alpha= altera a transparência da forma
+
 
 # Importando dados --------------------------------------------------------
 
@@ -59,10 +77,11 @@ ggplot() ?
 ggplot(data = dados,
        mapping = aes(x = peso,
                      y = altura)) +
-  geom_point()
-
+  geom_point() 
 
 # Gráfico de pontos (Função geom_jitter) ----------------------------------
+# fill= utilizada para 
+
 ggplot(data = dados,
        mapping = aes(x = peso,
                      y = altura,
@@ -76,7 +95,7 @@ ggplot(data = dados,
 ggplot(data = dados,
        mapping = aes(x = peso,
                      y = altura,
-                     color= genero)) +
+                     color = genero)) +
   geom_point()+
   scale_color_manual(values = c("#B048A2", "#FDE962"))
 
@@ -90,16 +109,16 @@ ggplot(data = dados,
 ggplot(data = dados, 
        mapping = aes(x = idade,
                      y= imc,
-                     color= raca))+
+                     color= raca)) +
   geom_point()
 
 # Gráfico de barras -------------------------------------------------------
 
 (altura_feminina <- dados %>% 
-   filter(genero == "female") %>% 
-   mutate(altura_polegadas = altura / 2.54) %>% 
-   group_by(idade_dec, genero) %>% 
-   summarize(altura_polegadas = mean(altura_polegadas)))
+   dplyr::filter(genero == "female") %>% 
+   dplyr::mutate(altura_polegadas = altura / 2.54) %>% 
+   dplyr::group_by(idade_dec, genero) %>% 
+   dplyr::summarize(altura_polegadas = mean(altura_polegadas)))
 
 ggplot(data = altura_feminina, 
        aes(x = idade_dec,
@@ -108,10 +127,13 @@ ggplot(data = altura_feminina,
 
 # Gráfico de barras (argumento = fill) ------------------------------------
 
+# Argumento: (stat = "identity") deixa os dados como estão
+# Já temos os valores de y calculados e vamos utilizá-lo diretamente
+
 ggplot(data = altura_feminina, 
        aes(x = idade_dec,
            y = altura_polegadas,
-           fill=idade_dec))+
+           fill= idade_dec)) +
   geom_bar(stat = "identity")
   
 # Gráfico de barras horizontal --------------------------------------------
@@ -122,37 +144,13 @@ ggplot(data = altura_feminina,
   geom_bar(stat = "identity") +  
   coord_flip()
 
-# Gráfico de colunas ------------------------------------------------------
-
-(altura_feminina <- dados %>% 
-   filter(genero == "female") %>% 
-   mutate(altura_polegadas = altura / 2.54) %>% 
-   group_by(idade_dec, genero) %>% 
-   summarize(altura_polegadas = mean(altura_polegadas)))
-
-ggplot(data = dados, 
-       mapping= aes(x = idade_dec,
-                    y = altura,
-                    fill= genero)) +
-  geom_col()
-
-#  Gráfico de colunas | variável categórica | labs | theme
-
-ggplot(data = dados, 
-       mapping= aes(x = idade_dec,
-                    y = altura,
-                    fill= genero)) +
-  geom_col(position = "dodge") +
-  labs(title = "Os homens são mais altos que as mulheres em todas as idades",
-       x= "Idade",
-       y= "Altura") +
-  theme_light()
-
 # Histograma --------------------------------------------------------------
 # Histograma simples ------------------------------------------------------
-plot0 <- ggplot(dados, aes(x= altura)) +
-  geom_histogram()
-# Argumentos: binwidth | fill | color | alpha | labs | tag | cap --------
+
+(plot0 <- ggplot(dados, aes(x= altura)) +
+  geom_histogram())
+
+# Argumentos: binwidth | fill | color | alpha | labs | tag | cap ------------
 
 (plot1 <- ggplot(dados, aes(x= altura)) +
   geom_histogram(binwidth=5,
@@ -166,6 +164,8 @@ plot0 <- ggplot(dados, aes(x= altura)) +
        caption = "Jennifer Lopes") +
   theme_minimal())
 
+plot0 + plot1
+
 #Alteração de eixos
 # scale_y_continuous(limits=c(0,145), breaks= seq(0,145, by = 50))
 
@@ -174,9 +174,9 @@ plot0 <- ggplot(dados, aes(x= altura)) +
 (plot2 <- ggplot(dados, aes(x = altura)) +
   geom_histogram(aes(y = ..density..), 
                  fill="#073b4c", 
-                 alpha=0.8) +
+                 alpha=0.9) +
   geom_density() +
-  
+
   stat_function(fun = dnorm,
                 color = "red",
                 size = 1,
@@ -207,16 +207,19 @@ plot0 <- ggplot(dados, aes(x= altura)) +
 # Box Plot ----------------------------------------------------------------
 # library(ggforce)
 # Box plot 1--------------------------------------------------------------------
+
 (box1 <- dados %>%
-  ggplot( aes(x=raca, y=altura, fill=raca)) +
+  ggplot(aes(x= raca, 
+              y=altura, 
+              fill=raca)) +
   geom_boxplot(show.legend = FALSE) +
-  scale_fill_viridis(discrete = TRUE, alpha=0.6)+
+  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
  labs(x= "Raça", 
       y=" Altura"))
 
 # Box plot 2--------------------------------------------------------------------
 (box2 <- dados %>%
-ggplot( aes(x=raca, y=altura, fill=raca)) +
+ggplot(aes(x=raca, y=altura, fill=raca)) +
   geom_boxplot()+
   
   scale_fill_viridis(discrete = TRUE, alpha=0.6) +
@@ -230,17 +233,19 @@ ggplot( aes(x=raca, y=altura, fill=raca)) +
   theme_minimal())
 
 # Box plot 3--------------------------------------------------------------------  
+
 (box3 <- 
 dados %>%
-  ggplot( aes(x=raca, y=altura, fill=raca)) +
-  geom_boxplot()+
+  ggplot(aes(x=raca, y=altura, fill=raca)) +
+  geom_boxplot() +
   scale_fill_viridis(discrete = TRUE, alpha=0.6) +
     labs(x= "Raça", 
          y=" Altura") +
   coord_flip())
+
 # Unindo box-plots --------------------------------------------------------
 
-box1+box2/box3
+box1 + box2 / box3
 
 # Gráficos interativos com pacote plotly ----------------------------------
 # library(plotly)
@@ -248,61 +253,66 @@ box1+box2/box3
 
 # Gráfico interativo (p1) -------------------------------------------------
 (p1 <- dados %>%
-  ggplot( aes(x=saude_genero, 
-              y=idade, 
-              fill=genero)) +
+  ggplot(aes(x= saude_genero, 
+              y= idade, 
+              fill= genero)) +
   geom_boxplot()+
   scale_fill_viridis(discrete = TRUE, alpha=0.6) +
-  geom_jitter(color="black", size=0.4, alpha=0.9)+
   labs(x="Estado de saúde",
        y= "Idade"))
-   
-ggplotly(p1)
 
+# geom_jitter(color="black", size=0.4, alpha=0.9) +
+
+ggplotly(p1)
 
 # Gráfico interativo (p2) -------------------------------------------------
 #library(lemon)
  
- (p2 <- ggplot(dados, aes(x=as.factor(saude_genero),
-                           y=idade, 
-                           color=genero)) + 
+ (p2 <- ggplot(dados, aes(x= saude_genero,
+                           y= idade, 
+                           color =genero)) + 
       geom_point(position=position_jitter(width=0.1)) + 
-     scale_color_viridis(discrete = TRUE, alpha=0.6)+
-      coord_flex_cart(bottom=brackets_horisontal(),
-                      left=capped_vertical('both')) +
+     scale_color_viridis(discrete = TRUE, alpha=0.6) +
+      coord_flex_cart(bottom= brackets_horisontal(),
+                      left= capped_vertical('both')) +
       labs(x="Estado de saúde",
            y= "Idade", 
            title = "Estado de saude conforme a idade",
            subtitle = "Estudo realizado em homens e mulheres",
            caption = " Jennifer Lopes")+
-      theme_light() + 
+      theme_classic() + 
       theme(panel.border=element_blank(), 
             axis.line = element_line()))
 
-
 # Gráficos interativos
+
 ggplotly(p1)
 ggplotly(p2)
 
 # Unindo Gráficos
+
 p2+p1
 
 # Facetas -----------------------------------------------------------------
 # library(ggthemes)
 
 # Função facet_wrap -------------------------------------------------------
+
+# position = "dodge": requer que a variável de agrupamento seja especificada no global ou geom_*na camada
+
+
 (fc1 <- ggplot(data = dados, 
-       mapping= aes(x = idade_dec,
+       mapping = aes(x = idade_dec,
                     y = altura,
-                    fill= genero))+
-  geom_col(position = "dodge")+
+                    fill= genero)) +
+  geom_col(position = "dodge") +
   scale_y_continuous(limits = c(0, 200),
-                     breaks = c(0, 50, 100, 150,195))+
+                     breaks = c(0, 50, 100, 150,195)) +
   labs(title = "Altura de homens e mulheres por faixa etária",
        x= "Idade",
        y= "Altura", 
-       tag = "A")+
-  theme_ipsum_tw()+
+       tag = "A") +
+  theme_ipsum_tw() +
   facet_wrap(~genero))
 
 # Função facet_grid -------------------------------------------------------
@@ -322,56 +332,11 @@ p2+p1
        tag = "B")+
   theme_light()+
    theme(element_blank()))
-             
-# Função facet_matrix -----------------------------------------------------
-
-(fc3 <- dados %>% 
-  ggplot() +
-  geom_boxplot(
-    aes(
-      x = .panel_x, 
-      y = .panel_y, 
-      fill = raca, 
-      group = interaction(.panel_x, raca)))+
-  facet_matrix(
-    cols = vars(genero), 
-    rows = vars(altura, peso, idade), switch = "y") +
-  labs(title = "Estado de saúde de homens e mulheres por faixa etária e peso",
-       tag = "c")+
-  theme_light()+
-  theme(element_blank()))
-
-# Coordenadas -------------------------------------------------------------
-# Coord_flip () --------------------------------------------------------------
-
-(c1 <- 
-    dados %>%
-    ggplot( aes(x=raca, y=altura, fill=raca)) +
-    geom_boxplot()+
-    scale_fill_viridis(discrete = TRUE, alpha=0.6) +
-    labs(x= "Raça", 
-         y=" Altura") +
-    
-    coord_flip())
-
-# coord_cartesian() ------------------------------------------------------
-
-(c2 <- 
-    dados %>%
-    ggplot( aes(x=raca, y=altura, fill=raca)) +
-    geom_boxplot(show.legend = FALSE)+
-    scale_fill_viridis(discrete = TRUE, alpha=0.6) +
-    labs(x= "Raça", 
-         y=" Altura") +
-    
-    coord_cartesian())
-
-# Unindo gráficos
-c1+ c2
 
 
 # Resumos estatísticos ----------------------------------------------------
 # Função stat_summary -----------------------------------------------------
+
 (re1 <- dados %>%
    ggplot( aes(x=raca, 
                y=altura, 
@@ -417,13 +382,18 @@ ggplotly(re3)
 
 # Gráficos interativos (pacote gganimate) ---------------------------------------------------
 
+# Função= transition_states()
+# Argumento: transition_length()- A duração relativa da transição. Será reciclado para corresponder ao número de fumantes nos dados
+# Argumento: state_length()- A duração relativa da pausa dos fumantes. Será reciclado para corresponder ao número de fumantes nos dados
+# Argumento: enter_fade()- Entrada de dados 
+# Argumento: exit_shrink()- Saída de dados 
+
 (ani <- dados %>%
-    ggplot( aes(x=raca, y=altura, fill=raca)) +
-    geom_boxplot()+
+    ggplot( aes(x=raca, y=altura, fill= raca)) +
+    geom_boxplot() +
+    scale_fill_viridis(discrete = TRUE, alpha= 0.6) +
     
-    scale_fill_viridis(discrete = TRUE, alpha=0.6) +
-    
-    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_jitter(color="black", size=0.4, alpha= 0.9) +
     labs(title = "Altura de diferentes raças",
          x= "Raça",
          y= "Altura",
@@ -437,7 +407,7 @@ ggplotly(re3)
     ) +
     enter_fade() + 
     exit_shrink() +
-    ease_aes('sine-in-out'))
+    ease_aes('exponential-in-out'))
 
 anim_save("ani.gif",ani)
 

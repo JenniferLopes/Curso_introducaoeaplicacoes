@@ -38,24 +38,26 @@ options(htmltools.dir.version = FALSE)
 # Motivação para usar o R?
 
 ```{r message=FALSE, warning=FALSE, , out.width="25%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("AGRO.jpeg")
+knitr::include_graphics("imagens/AGRO.jpeg")
 ```
 
 ```{r message=FALSE, warning=FALSE, , out.width="25%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("Experimento Arroz Irrigado.jpeg")
+knitr::include_graphics("imagens/Experimento Arroz Irrigado.jpeg")
 ```
 
 ---
 # Sobre a R-Ladies
 
-![](imagem_3.png)
+```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("imagens/imagem_3.png")
+```
 
 R-Ladies é uma organização mundial cuja missão é promover a diversidade de gênero na comunidade R.
 ---
 # Estamos, somos e realizamos
 
-```{r message=FALSE, warning=FALSE, , out.width="50%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("imagem_4.png")
+```{r message=FALSE, warning=FALSE, , out.width="70%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("imagens/imagem_4.png")
 ```
 
 .center[![R-Ladies Global](https://static.wixstatic.com/media/11062b_f439f9a2720e4e2881766d93a379f347~mv2.jpg/v1/fill/w_527,h_581,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/11062b_f439f9a2720e4e2881766d93a379f347~mv2.jpg)]
@@ -82,12 +84,10 @@ O foco principal do R-Ladies, portanto, é apoiar entusiastas do gênero de mino
 # Time R-Ladies Goiânia+
 
 ```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("imagem_5.jpg")
+knitr::include_graphics("imagens/imagem_5.jpg")
 ```
 ---
 # Mídias sociais da R-Ladies Goiânia+ 
-
-.center[![Time R-Ladies Goiânia+](imagem_1.jpg)]
 
 - Site:https://www.rladiesgyn.com/ 
 - MeetUp:https://www.meetup.com/pt-BR/rladies-goiania/
@@ -111,22 +111,20 @@ knitr::include_graphics("imagem_5.jpg")
 - **Aproveitem o máximo possível, é para vocês!**
 
 ```{r message=FALSE, warning=FALSE, , out.width="45%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("gif_3.gif")
+knitr::include_graphics("imagens/gif_3.gif")
 ```
 ---
-# 5 Motivos para você aprender sobre o R
+# 10 Motivos para você aprender sobre o R
 
 1. Ciência de dados é uma área interdiciplinar
 
-1. Crescente procura de profissionais com essa habilidade. 
+1. Crescente procura de profissionais com essa habilidade 
 
 1. Open source (free)
 
 1. Comunidade crescente e ativa
 
 1. É utilizado em diferentes setores e mercados de trabalho
----
-# Mais 5 motivos 
 
 1. Produz análise de dados avançadas
 
@@ -147,7 +145,7 @@ class: inverse, center, middle
 
 1. Iniciando com R
 
-1. Projetos, pacotes, operador pipe% 
+1. Projetos, pacotes, operador pipe %>%  
 
 1. Manipulação de dados com pacote {**dplyr**}
 
@@ -156,7 +154,7 @@ class: inverse, center, middle
 1. Materiais | Bibliografias | Links
 
 ```{r message=FALSE, warning=FALSE, , out.width="35%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("gif_4.gif")
+knitr::include_graphics("imagens/gif_4.gif")
 ```
 ---
 class: inverse, center, middle
@@ -188,22 +186,28 @@ class: inverse, center, middle
 3. Ao entrar, você será direcionado ao ambiente RStudio na nuvem
 
 ```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("posi.png")
+knitr::include_graphics("imagens/posi.png")
 ```
 ---
-# 1.4 Meu primeiro script
+# 1.4 Meu Projeto
 
-Para que você comece a escrever os códigos ou seja “programar”, é necessário criar um arquivo R Script. Veja como abrir este arquivo, clicando em:
+Para que você comece a escrever os códigos ou seja “programar”, é necessário criar um projeto. Veja como abrir clicando em:
 
-**File**> **New File** > **R Script**. Ou use o atalho **Ctrl + Shift + N**.
+**File**> **New_Project**. 
 
-```{r message=FALSE, warning=FALSE, , out.width="70%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("novo.png")
+Dentro do projeto você pode abrir um novo script.R, **File**> **New_File**> **R_Script**.
+
+Ou use o atalho **Ctrl + Shift + N**.
+
+[Atalhos|Site da Posit](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE)
+
+```{r message=FALSE, warning=FALSE, , out.width="60%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("imagens/novo.png")
 ```
 ---
 # 1.5 Ambiente do RStudio
 ```{r message=FALSE, warning=FALSE, , out.width="80%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("ambiente.jpg")
+knitr::include_graphics("imagens/ambiente.jpg")
 ```
 
 - **Editor:** onde você irá escrever e editar os scripts em R
@@ -218,7 +222,7 @@ knitr::include_graphics("ambiente.jpg")
 ## Ciclo da ciência de dados com R
 
 ```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("baseciencia.png")
+knitr::include_graphics("imagens/baseciencia.png")
 ```
 
 🟣 [Livro R For Data Science](https://r4ds.hadley.nz/intro)
@@ -227,7 +231,13 @@ knitr::include_graphics("baseciencia.png")
 class: inverse, center, middle
 # 2. Iniciando com R
 ---
+# Começo de tudo, calma que tudo tem jeito!
 
+## "A frustração é natural quando você começa a programar em R, porque é um adesivo para pontuação, e até mesmo um personagem fora do lugar fará com que ele reclame. Mas enquanto você deve esperar ser um pouco frustrado, tenha conforto em que é típico e temporário: acontece com todos, e a única maneira de superar isso é continuar tentando".
+
+### Hadley Wickham & Garrett Grolemund
+
+---
 # R como calculadora
 
 ```{r}
@@ -260,12 +270,12 @@ class: inverse, center, middle
 - Tecnicamente, um **objeto (ou variável)** é uma alocação de memória onde o R guarda valores ou resultados de comandos, utilizando um nome definido pelo usuário.
 
 ```{r}
-nome_do_objeto <- 30+50+80
+nome_do_objeto <- 30 + 50 + 80
 ```
 
 ```{r}
-y= 20*20
-head(y)
+y= 20 * 20
+head (y)
 ```
 
 ### Atalho para o sinal de atribuição
@@ -275,11 +285,11 @@ head(y)
 # Tipo de objetos
 
 ```{r message=FALSE, warning=FALSE, , out.width="50%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("tipos de dados.png")
+knitr::include_graphics("imagens/tipos de dados.png")
 ```
 
 ### **Vetores**
-Eles são conjuntos de elementos do mesmo tipo, como números ou caracteres, armazenados em uma única dimensão. Podemos criar um vetor simples usando a função c().
+Eles são conjuntos de elementos do mesmo tipo, como números ou caracteres, armazenados em uma única dimensão. Podemos criar um vetor simples usando a função c(). Formam a base para muitas outras estruturas.
 
 ```{r}
 vetor1 <- c(10, 20, 30, -50)
@@ -313,11 +323,11 @@ head(iris)
 🟣 [YouTube-R-Ladies Goiânia](https://www.youtube.com/)
 
 ```{r message=FALSE, warning=FALSE, , out.width="30%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("base.jpg")
+knitr::include_graphics("imagens/base.jpg")
 ```
 
 ```{r message=FALSE, warning=FALSE, , out.width="30%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("funcionalidades.jpg")
+knitr::include_graphics("imagens/funcionalidades.jpg")
 ```
 
 ---
@@ -328,7 +338,7 @@ class: inverse, center, middle
 Pacotes são coleções de **funções** R, dados e código compilado em um formato bem definido.
 
 ##### Instalação dos pacotes (usar sempre "nome_do_pacote ")
-##### Usar a função install.packages(), via CRAN
+##### 1. Usar a função install.packages(), via CRAN
 ```{r}
 #install.packages("tidyverse")
 ```
@@ -338,10 +348,15 @@ Pacotes são coleções de **funções** R, dados e código compilado em um form
 ```{r}
 #library(tidyverse)
 ```
+
+```{r message=FALSE, warning=FALSE, , out.width="30%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("imagens/pacotes.gif")
+```
+
 ---
 # Pacotes no R 
 
-##### Instalação via GitHub
+##### 2. Instalação via GitHub
 ```{r}
 # install.packages("devtools")
 # devtools::install_github('tidyverse/tidyverse')
@@ -351,6 +366,9 @@ Pacotes são coleções de **funções** R, dados e código compilado em um form
 ```{r}
 tidyverse::tidyverse_packages()  
 ```
+
+##### 3. Instalação via Output (Vamos ver na prática).
+
 ---
 class: inverse, center, middle
 #Operador pipe %>%
@@ -361,7 +379,7 @@ class: inverse, center, middle
 
 - **Atalho: Ctrl + SHIFT + M**
 ```{r message=FALSE, warning=FALSE, , out.width="80%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("dplyr-pipe.png")
+knitr::include_graphics("imagens/dplyr-pipe.png")
 ```
 
 ```{r include=TRUE, message=FALSE,warning=FALSE}
@@ -379,6 +397,7 @@ iris %>%
   dplyr::filter(Sepal.Length > 7) %>% 
   dplyr::arrange(desc(Sepal.Length))
 ```
+#### Operador pipe |> 
 ---
 class: inverse, center, middle
 # Dicas importantes
@@ -390,7 +409,7 @@ class: inverse, center, middle
 
 1. Erros de digitação e de letras maiúsculas e minúsculas (o R diferencia).
 
-1. Não use as palavras **reservadas** para nomear objetos,(evite usar número nas variáveis)
+1. Não use as palavras **reservadas** para nomear objetos,(não use números no início do nome de um objeto)
 
 1. **Variável**: é uma coluna da tabela.
 
@@ -408,7 +427,7 @@ class: inverse, center, middle
 # Manipulação de dados com pacote {dplyr}
 
 ```{r message=FALSE, warning=FALSE, , out.width="60%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("tidy.png")
+knitr::include_graphics("imagens/tidy.png")
 ```
 ---
 # Antes disso: Tidyverse
@@ -425,7 +444,7 @@ knitr::include_graphics("tidy.png")
 ---
 # Pacote dplyr
 ```{r message=FALSE, warning=FALSE, , out.width="20%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("logo.png")
+knitr::include_graphics("imagens/logo.png")
 ```
 
 - O pacote **dplyr** é uma gramática de manipulação de dados, fornecendo um conjunto consistente de verbos que ajudam a resolver os desafios mais comuns da manipulação de dados.
@@ -451,28 +470,66 @@ knitr::include_graphics("logo.png")
 - **group_by**: agrupa linhas de valores iguais em uma coluna
 
 ```{r message=FALSE, warning=FALSE, , out.width="35%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("funções.gif")
+knitr::include_graphics("imagens/funções.gif")
 ```
+---
+# Conjunto de dados
+
+Pesquisa Nacional de Exame de Saúde e Nutrição (NHANES) é um programa de estudos desenvolvido para avaliar a saúde e o estado nutricional de adultos e crianças nos Estados Unidos.
+
+```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("imagens/nhanesdados.png")
+```
+---
+## Variáveis que vamos manipular
+- ID
+- ano
+- genero
+- idade
+- idade_dec
+- raca
+- educacao
+- estado-civil
+- renda
+- trabalho
+- peso
+- altura
+- imc
+- saude_genero
+- horas_sono
+- atividade_fisica
+- atividade_diaria
+- fumante
+---
+# Arquivos do projeto que vocês irão utilizar
+
+### curso_introducaoeaplicacaoes.Rproj (Projeto)
+
+### slides_curso.Rmd (Slides RMarkdown)
+
+### Manipulacao.R (Manipulação de dados)
+
+### Visualizacao.R (Visualização de dados)
 ---
 class: inverse, center, middle
 # Vamos para prática ?
 
 ```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("cat.gif")
+knitr::include_graphics("imagens/cat.gif")
 ```
 ---
 class: inverse, center, middle
 # Visualização com  pacote {ggplot}
 
 ```{r message=FALSE, warning=FALSE, , out.width="80%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("ggplot.gif")
+knitr::include_graphics("imagens/ggplot.gif")
 ```
 ---
 
 # ggplot e sua gramática
 
 ```{r message=FALSE, warning=FALSE, , out.width="20%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("ggplot2Hex.jpg")
+knitr::include_graphics("imagens/ggplot2Hex.jpg")
 ``` 
 - O **ggplot2** é um pacote R para produzir gráficos estatísticos ou de dados. 
 
@@ -481,13 +538,13 @@ knitr::include_graphics("ggplot2Hex.jpg")
 - A principal referência deste pacote é o livro ggplot2: **Elegant Graphics for Data Analysis (3e)**, escrito por Hadley Wickham. 
 
 🟣 [Use este livro como referência](https://ggplot2-book.org/)
-
+🟣 [Documentação do pacote](https://ggplot2.tidyverse.org/)
 ---
 
 # Gramática do ggplot
 
 ```{r message=FALSE, warning=FALSE, , out.width="100%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("visualizacao.png")
+knitr::include_graphics("imagens/visualizacao.png")
 ``` 
 
 1. **Obtenção dos dados**
@@ -527,22 +584,39 @@ knitr::include_graphics("visualizacao.png")
 - ggsave("meu gráfico.png")
 
 - ggsave("meu gráfico.png", width = 8, height = 5, dpi = 600)
+
+## Acesse a documentação do pacote
+
+🟣 [Pacote ggplot2](https://ggplot2.tidyverse.org/)
 ---
 class: inverse, center, middle
 # Vamos para prática ?
 
 ```{r message=FALSE, warning=FALSE, , out.width="70%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
-knitr::include_graphics("gif_6.gif")
+knitr::include_graphics("imagens/gif_6.gif")
 ``` 
 ---
 # Materiais
 
+- [Pacote tidyverse](https://github.com/tidyverse)
+- [Pacote ggplot](https://github.com/tidyverse/ggplot2)
+- [Pacote readr](https://github.com/tidyverse/readr)
+- [Pacote dplyr](https://github.com/tidyverse/dplyr)
+- [Pacote janitor](https://cran.r-project.org/web/packages/janitor/index.html)
+- [Pacote DT](https://rstudio.github.io/DT/)
+- [Site da posit](https://posit.co/)
+- [Baixar o R](https://cloud.r-project.org/)
+- [Baixar o RStudio](https://posit.co/download/rstudio-desktop/)
+- [Livro R For Data Science](https://r4ds.hadley.nz/intro)
+- [ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/)
 
 
 ---
 # Muito obrigada
 
-
+```{r message=FALSE, warning=FALSE, , out.width="85%", paged.print=FALSE, echo=FALSE, fig.align = 'center'}
+knitr::include_graphics("imagens/gatos.png")
+``` 
 
 
 

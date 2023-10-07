@@ -20,21 +20,34 @@
 
 # Carregando os pacotes ---------------------------------------------------
 
-library(tidyverse)
-library(janitor)
-library(ggplot2)
-library(dplyr)
-library(readr)
-library(DT)
+library(tidyverse)# Coleção de pacotes para funcionarem em conjunto no R
+library(janitor)  # Examinar e limpar dados
+library(ggplot2)  # visualização gráfica
+library(dplyr)    # Manipulação de dados
+library(readr)    # Leitura de dados separados por vírgula
+library(DT)       # Formatação de DataTables
 
 # Importando dados --------------------------------------------------------
 
-nhanes <- read.csv("nhanes.csv")
+nhanes <- read.csv("nhanes.csv") 
+
+
+# Importação via environment ----------------------------------------------
+
+
+
+# Visualização dos dados --------------------------------------------------
+
+# Função datatable() {Pacote DT}
+
+datatable(nhanes)
 
 # Limpeza dos dados -------------------------------------------------------
+# Funcção rename
+# Primeiro o nome da variável nova = variável original
 
 dados <- nhanes %>% 
-  rename(genero= Gender, idade= Age, idade_dec=AgeDecade, raca= Race1,
+  dplyr::rename(genero= Gender, idade= Age, idade_dec=AgeDecade, raca= Race1,
          educacao= Education, estado_civil= MaritalStatus, renda= HHIncome,
          casa= HomeOwn,trabalho= Work, peso= Weight, altura= Height,
          imc= BMI, saude_genero= HealthGen, horas_sono= SleepHrsNight, 
@@ -44,245 +57,249 @@ dados <- nhanes %>%
 # Visualização dos dados -------------------------------------------------------
 
 dados %>%
-  datatable() 
+  DT::datatable() 
 
 # Inspeção dos dados ------------------------------------------------------
 
 View(dados)
 head(dados,n = 10)
-glimpse(dados)
+dplyr::glimpse(dados)
 
 # Removendo colunas ------------------------------------------------------------
 
 dados <- dados %>% 
-  select (-DaysPhysHlthBad, -DaysMentHlthBad) 
+  dplyr::select (-DaysPhysHlthBad, -DaysMentHlthBad, -TVHrsDay) 
+
+# Concatenar
+
+dados <- dados %>% 
+  dplyr::select (-c(DaysPhysHlthBad, DaysMentHlthBad, TVHrsDay))
 
 # Removendo NAs -----------------------------------------------------------
 # A função drop_na() elimina todas as linhas que contém missings no dataset.
 
-dados <- dados %>% 
-  drop_na() 
-
-# Pegando o gancho  -------------------------------------------------------
-# Função replace_na: vocês podem substituir NAs por valores especificos
-
-df <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
-df %>% replace_na(list(x = 0, y = "unknown"))
-
-# tidyr::drop_na(data, nome da coluna)
-# todas as linhas que contém missing nessa coluna são eliminados
+dados <- dados %>%
+  tidyr::drop_na()
 
 ###############################################################################
+# Como ficaram os dados? --------------------------------------------------
+ 
+dados %>% 
+  DT::datatable()
+
 # Função SELECT () -----------------------------------------------------------
 
-dados %>% 
-  select(genero, idade) %>% 
-  datatable()
+dados %>%
+  dplyr::select(genero, idade) %>% 
+  DT::datatable()
+
+# Select você também ------------------------------------------------------
+
+# estado_civil
+# raça
 
 # Função select e contains ------------------------------------------------
 
-dados %>% 
-  select(contains("idade")) %>% 
-  datatable()
-
+dados %>%
+  dplyr::select(contains("idade")) %>% 
+  DT::datatable()
 
 # Função select (starts_with e ends_with) ---------------------------------
 
 dados %>% 
-  select(starts_with("R")) %>% 
-  datatable()
+  dplyr::select(starts_with("R")) %>% 
+  DT::datatable()
 
 dados %>% 
-  select(ends_with("E")) %>% 
-  datatable()
+  dplyr::select(ends_with("E")) %>% 
+  DT::datatable()
 
-# Função Select (var1:var5) ------------------------------------------------------
+# Função Select (var:var) ------------------------------------------------------
 
-dados %>% 
-  select(genero:trabalho) %>% 
-  datatable()
+
 
 # Função Select  (-var) ----------------------------------------------------------
 
 dados %>% 
-  select(-ID) %>% 
-  datatable()
+  dplyr::select(-ID) %>% 
+  DT::datatable()
 
-# Função Select conjunto (-(var1:var2)) -------------------------------------------
+# Função Select conjunto (-(var:var)) ----------------------------------------
 
-dados %>% 
-  select(-(ID:educacao)) %>% 
-  datatable()
+
 
 ###############################################################################
-# Função MUTATE () -----------------------------------------------------------
+# Função MUTATE () ------------------------------------------------------------
+# .before = antes
+# .after = depois
 
 # 1. Criar uma nova variável com um valor específico
 
 dados %>% 
-  mutate(nova_var= "Americanos", .before = genero) %>% 
-  datatable()
+  dplyr::mutate(nova_var= "Americanos", .before = genero) %>% 
+  DT::datatable()
   
 dados %>% 
-  mutate(nova_var= "Americanos", .after= genero) %>% 
-  datatable()
+  dplyr::mutate(nova_var= "Americanos", .after= genero) %>% 
+  DT::datatable()
 
 # 2. Criar uma nova variável com base em outras variáveis
 
 dados %>% 
-  mutate(altura_polegadas= altura/2.54, .after = altura) %>%
-  datatable()
-  
+  dplyr::mutate(altura_polegadas= altura/2.54, .after = altura) %>%
+  DT::datatable()
+
 # 3. Alterar uma variável existente
+# round= arredondamentos
 
 dados %>% 
-  mutate(imc = round(imc, digits = 0)) %>% 
-  select(imc) %>% 
-  datatable()
+  dplyr::mutate(imc = round(imc, digits = 0)) %>% 
+  DT::datatable()
+
+# Mutate você tambem ------------------------------------------------------
+
+# .before = antes
+# .after = depois
+
+# crie uma nova variável e atribua o valor 100
+# new_var depois de ano
 
 # Função FILTER () -------------------------------------------------------
+# Operadores binários 
+
+# x < y
+# x > y
+# x <= y
+# x >= y
+# x == y
+# x != y
 
 # 1. Usamos == para selecionar todas as observações que atendem aos critérios
 
 dados %>% 
-  filter(genero == "female") %>% 
-  select(ID, genero) %>% 
-  datatable()
+  dplyr::filter(genero == "female") %>% 
+  dplyr::select(ID, genero) %>% 
+  DT::datatable()
 
 # 2. Usamos != para selecionar todas as observações que não atendem aos critérios
   
 dados %>% 
-  filter(saude_genero!= "Good") %>% 
-  select(saude_genero) %>% 
-  datatable()
+  dplyr::filter(saude_genero!= "Good") %>% 
+  dplyr::select(genero, saude_genero) %>% 
+  DT::datatable()
   
 # 3. Podemos combinar comparações e operadores lógicos
 
 dados %>% 
-  filter(saude_genero == "Good" | saude_genero == "Vgood" |
-         saude_genero == "Excellent") %>%
-  select(saude_genero) %>% 
-  datatable()
+  dplyr::filter(saude_genero == "Good" | saude_genero == "Vgood" |
+                  horas_sono > 7) %>%
+  dplyr::select(saude_genero, horas_sono) %>% 
+  DT::datatable()
 
-# 4. Podemos encadear múltiplas funções.
+# Filter() você tambem ------------------------------------------------------
 
-dados %>%
-  filter(genero == "male" & (saude_genero == " Good" |
-  saude_genero == "Vgood" | saude_genero == "Excellent")) %>%
-  select(genero,saude_genero) %>% 
-  datatable()
-  
+# filter genero feminino e idade maior e igual que 30
 
 # Função SUMMARIZE () --------------------------------------------------------
 
-# Qual a média de altura por gênero
+# Qual a média de altura por gênero?
+# acrescentar mais funções (mediana, sd, var)
 
 dados %>% 
-  group_by(genero) %>% 
-  summarize(mean_altura = mean(altura)) %>% 
-  datatable()
-
-# Vários argumentos
-
-dados %>% 
-summarize (mean_peso = mean(peso),
-           mean_idade = mean(idade),
-           mean_horas_sono= mean(horas_sono)) %>% 
-  datatable()
+  dplyr::group_by(genero, raca) %>% 
+  dplyr::summarize(mean_altura = mean(altura))%>% 
+  DT::datatable()
       
 # Função GROUP-BY () ---------------------------------------------------------
 
 dados %>% 
-  group_by(ano, genero) %>% 
-    summarise(mean_atividade_diária= mean(atividade_diaria)) %>% 
-  datatable()
+  dplyr::group_by(ano, genero) %>% 
+  dplyr::summarise(mean_atividade_diária= mean(atividade_diaria)) %>% 
+  DT::datatable()
            
 (atividade <- dados %>%
-  group_by(idade, genero) %>% 
-  summarise(mean_atividade_diária= mean(atividade_diaria))%>% 
-  arrange(desc(mean_atividade_diária)) %>% 
-  datatable())
+    dplyr::group_by(idade, genero) %>% 
+    dplyr::summarise(mean_atividade_diária= mean(atividade_diaria))%>% 
+    dplyr::arrange(desc(mean_atividade_diária)) %>% 
+    DT::datatable())
 
 # Função COUNT () -----------------------------------------------------------
+# acrescentar mais variáveis
 
 dados %>% 
-  count(idade_dec) %>% 
-  datatable()
+  dplyr::count(idade_dec, genero) %>% 
+  DT::datatable()
   
-dados %>% 
-  count(idade_dec, genero, renda) %>% 
-  datatable()
-
 # Função ARRANGE () ----------------------------------------------------------
 
 dados %>% 
-  arrange(idade) %>% 
-  datatable()
+  dplyr::arrange(idade) %>% 
+  DT::datatable()
 
 dados %>% 
-  arrange(desc(idade)) %>% 
-  datatable()
+  dplyr::arrange(desc(idade)) %>% 
+  DT::datatable()
 
 # Criando novas tabelas ---------------------------------------------------
 
-(altura_feminina <- dados %>% 
-  filter(genero == "female") %>% 
-  mutate(altura_polegadas = altura / 2.54) %>% 
-  group_by(idade_dec, genero) %>% 
-  summarize(altura_polegadas = mean(altura_polegadas))%>% 
-  datatable())
+(altura_feminina <- dados %>%
+   dplyr::filter(genero == "female") %>% 
+   dplyr::mutate(altura_polegadas = altura / 2.54) %>% 
+   dplyr::group_by(idade_dec, genero) %>% 
+   dplyr::summarize(altura_polegadas = mean(altura_polegadas))%>% 
+   DT::datatable())
   
-# Tabelas cruzadas (crosstabs)  -------------------------------------------------------
 
-# Função tabyl e adorn_ são do pacote janitor
+
+
+# Função tabyl e adorn_ são do pacote janitor -----------------------------
+
+# n() e percent()
 
 dados %>% 
-  tabyl(idade_dec) %>% 
-  datatable()
+  janitor::tabyl(idade_dec) %>% 
+  DT::datatable()
 
 # Adicionando variáveis 
 
 dados %>% 
-  tabyl(idade_dec, genero) %>% 
-  datatable()
+  janitor::tabyl(idade_dec, genero) %>% 
+  DT::datatable()
 
 # Adicionando totais nas linhas e nas colunas
 
 dados %>% 
-  tabyl(idade_dec, genero) %>%
-  adorn_totals(where = c("row", "col")) %>% 
-  datatable()
+  janitor::tabyl(idade_dec, genero) %>%
+  janitor::adorn_totals(where = c("row", "col")) %>% 
+  DT::datatable()
 
-# Adicionando porcentagem
-
-dados %>% 
-  tabyl(idade_dec, genero) %>%
-  adorn_totals(where = c("row", "col")) %>%
-  adorn_percentages() %>% 
-  datatable()
-
-# Formatando a porcentagem
+# Adicionando totais na linha
 
 dados %>% 
-  tabyl(idade_dec, genero) %>%
-  adorn_totals(where = c("row", "col")) %>%
-  adorn_percentages() %>% 
-  adorn_pct_formatting(digits = 0,
-                     rounding = "half up") %>% 
-  datatable()
+  janitor::tabyl(idade_dec, genero) %>%
+  janitor::adorn_totals (c("row")) %>%
+  DT::datatable()
+
+# Adicionando e Formatando a porcentagem
+
+dados %>% 
+  janitor::tabyl(idade_dec, genero) %>%
+  janitor::adorn_totals(c("row", "col")) %>%
+  janitor::adorn_percentages() %>% 
+  janitor::adorn_pct_formatting(digits = 0) %>%
+  DT::datatable()
 
 # Acrescentando n (totais)
 
 dados %>% 
-  tabyl(idade_dec, genero) %>%
-  adorn_totals(where = c("row", "col")) %>%
-  adorn_percentages() %>% 
-  adorn_pct_formatting(digits = 0,
-                       rounding = "half up") %>% 
-  adorn_ns() %>% 
-  datatable()
+  janitor::tabyl(idade_dec, genero) %>%
+  janitor::adorn_totals(where = c("row", "col")) %>%
+  janitor::adorn_percentages() %>% 
+  janitor::adorn_pct_formatting(digits = 0) %>% 
+  janitor::adorn_ns() %>% 
+  DT::datatable()
 
 # Exportando dados -------------------------------------------------------
 
-write_delim(dados, file = "dados.csv")
+readr::write_delim(dados, file = "dados.csv")
 

@@ -135,3 +135,19 @@ knitr::include_graphics("shape.png")
     ### Contínuas: altura, peso, idade, imc
 
     ### Discreta: espécies, gênero, estado cívil, raça
+
+# Leitura de dados
+
+-   `read_csv()`: valores separados por vírgula (CSV)
+
+-   `read_tsv()`: valores separados por tabulação (TSV)
+
+-   `read_csv2()`: valores separados por ponto e vírgula com `,`a marca decimal
+
+-   `read_delim()`: arquivos delimitados (CSV e TSV são casos especiais importantes)
+
+-   `read_fwf()`: arquivos de largura fixa
+
+-   `read_table()`: arquivos separados por espaços em branco
+
+-   `read_log()`: arquivos de log da web
